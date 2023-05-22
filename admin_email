@@ -1,0 +1,9 @@
+The admin/webmaster email address can be read from a hidden html input field.
+
+-	go to /index.php
+-	click on "Sign In" button
+-	click on "I forgot my password"
+-	inspect "Submit" button
+-	change this value 'value="webmaster@borntosec.com"' to something different
+
+This shows us to never leave sensitive data in the code.
