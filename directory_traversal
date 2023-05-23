@@ -1,0 +1,39 @@
+Directory Traversal or "dot-dot-slash"
+
+-	reading arbitrary files via directory traversal
+
+-	access and view files located in the web server file system
+	but outside of the web application’s document root folder
+
+-	this exploit allows to read sensitive files from
+	the root directory of the host system
+
+-	exploit can be easily automated with the tool DotDotPwn
+	->	install perl
+		->	macOS:	brew install perl
+		->	linux:	sudo apt install perl
+	->	git clone https://github.com/wireghoul/dotdotpwn.git
+	->	./dotdotpwn.pl -m http-url -u http://127.0.0.1/index.php\?page\=submit/../../../../TRAVERSAL -k "flag"
+		->	-m specifies which module to be used, in this case http-url
+		->	-u	the URL with the part to be fuzzed marked as TRAVERSAL
+		->	-k <string_pattern>
+			String pattern to match in the response if it's vulnerable
+
+-	Vulnerable URL
+	-> http://127.0.0.1/index.php?page=../../../../../../../../etc/passwd
+
+
+
+Fixes:
+
+	-	don’t store sensitive configuration files inside the web root
+	-	avoid passing any filenames in user input
+	-	create white list of safe file paths
+	-	run web app in a limited environment
+		->	for example a seperate Docker container
+	-	deny access to any parent directories relative to the web server root
+
+Sources:
+
+	-	https://owasp.org/www-community/attacks/Path_Traversal
+	-	https://www.aldeid.com/wiki/Dotdotpwn
