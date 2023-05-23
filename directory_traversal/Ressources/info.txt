@@ -22,8 +22,6 @@ Directory Traversal or "dot-dot-slash"
 -	Vulnerable URL
 	-> http://127.0.0.1/index.php?page=../../../../../../../../etc/passwd
 
-
-
 Fixes:
 
 	-	don’t store sensitive configuration files inside the web root

