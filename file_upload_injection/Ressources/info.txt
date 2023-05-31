@@ -1,0 +1,20 @@
+File Upload Injection
+
+This vulnerability arises when uploaded files are not sufficiently validated by the web server.
+
+-	Not validating the file name can cause that crucial files with the same name will be overwritten.
+-	An attacker can also upload malicous scripts when the file type is not checked.
+-	Uploading large files can cause an DoS (Denial of Service) which fills up all available
+	disk space on the servers file system.
+
+In this exercise we will upload a simple PHP script and mask it as an image.
+
+curl -X POST -F "Upload=1" -F "uploaded=@/path/to/php/script.php;type=image/jpeg" http://localhost/index.php\?page\=upload | grep "flag"
+
+How to prevent file upload vulnerabilities
+
+-	check the file extension against a whitelist of permitted extensions
+-	check the filename if it contains strings that could be interpreted as
+	a directory traversal (../../../)
+-	rename uploaded files to avoid filename collisions
+-	use established file upload libraries/frameworks
